@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VocabularyTest.Views.WordsPage"
+             xmlns:VM="clr-namespace:VocabularyTest.ViewModels">
+
+    <ContentPage.BindingContext>
+        <VM:WordListViewModel x:Name="listViewModel"></VM:WordListViewModel>
+    </ContentPage.BindingContext>
+
+    <Grid Margin="20,20,20,20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <CollectionView x:Name="wordsView" Grid.Row="0" Grid.Column="0" Grid.RowSpan="10" ItemsSource="{Binding Words}" Margin="0,1,20,0" SelectionMode="Single" SelectionChanged="wordsView_SelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="Black" Stroke="Black" StrokeThickness="1" IsVisible="{Binding IsSupposedToShow}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal"></VisualState>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="Stroke" Value="#EA738D"></Setter>
+                                        <Setter Property="BackgroundColor" Value="#EA738D"></Setter>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid BackgroundColor="SteelBlue" Padding="5" Margin="1" IsVisible="{Binding IsSupposedToShow}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding EnglishWord}" TextColor="White"/>
+                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding HungarianWord}" TextColor="White"></Label>
+                            <Label Grid.Column="2" Grid.Row="0" Text="{Binding Difficulty}" TextColor="White"></Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button x:Name="newWordsBtn" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,0,10" Text="Új szavak felvétele" VerticalOptions="Center" Clicked="newWordsBtn_Clicked"></Button>
+        <Button x:Name="newTopicBtn" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,0,0,10" Text="Új témakör felvétele" VerticalOptions="Center" Clicked="newTopicBtn_Clicked"></Button>
+        <Button x:Name="deleteWordBtn" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,0,10" Text="Kiválasztott szó törlése" VerticalOptions="Center" Clicked="deleteWordBtn_Clicked"></Button>
+        <Button x:Name="updateTopicBtn" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" Margin="0,0,0,10" Text="Kiválasztott témakör módosítása" VerticalOptions="Center" Clicked="updateTopicBtn_Clicked"></Button>
+        <Button x:Name="deleteTopicBtn" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Margin="0,0,0,10" Text="Kiválasztott témakör törlése" VerticalOptions="Center" Clicked="deleteTopicBtn_Clicked"></Button>
+        <Picker x:Name="topicPckr" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" Margin="0,0,0,10" Title="Témakör" 
+                ItemsSource="{Binding Topics}" ItemDisplayBinding="{Binding Name}" SelectedIndex="0" SelectedIndexChanged="TopicPckr_SelectedIndexChanged"/>
+        <StackLayout Grid.Column="1" Grid.Row="8" Orientation="Vertical">
+            <CheckBox x:Name="BasicChckBx" HorizontalOptions="Center" IsChecked="True" CheckedChanged="BasicChckBx_CheckedChanged"></CheckBox>
+            <Label Text="Alapfok" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+        </StackLayout>
+        <StackLayout Grid.Column="2" Grid.Row="8" Orientation="Vertical">
+            <CheckBox x:Name="IntermediateChckBx" HorizontalOptions="Center" IsChecked="True" CheckedChanged="IntermediateChckBx_CheckedChanged"></CheckBox>
+            <Label Text="Középfok" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+        </StackLayout>
+        <StackLayout Grid.Column="3" Grid.Row="8" Orientation="Vertical">
+            <CheckBox x:Name="AdvancedChckBx" HorizontalOptions="Center" IsChecked="True" CheckedChanged="AdvancedChckBx_CheckedChanged"></CheckBox>
+            <Label Text="Felsőfok" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+        </StackLayout>
+
+        <Button x:Name="mainPageBtn" Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3" Margin="0,10,0,10" Text="Vissza a Főoldalra" VerticalOptions="Center" Clicked="mainPageBtn_Clicked"></Button>
+
+    </Grid>
+</ContentPage>

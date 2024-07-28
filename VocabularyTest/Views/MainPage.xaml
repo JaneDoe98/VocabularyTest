@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VocabularyTest.Views.MainPage"
+             xmlns:VM="clr-namespace:VocabularyTest.ViewModels">
+
+    <ContentPage.BindingContext>
+        <VM:MainPageViewModel x:Name="mainViewModel"></VM:MainPageViewModel>
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout
+            x:Name="VertLayout"
+        HorizontalOptions="Center">
+        <StackLayout Margin="0,20,0,20">
+            <Picker x:Name="DifficultyPckr" Title="Nehézség" ItemsSource="{Binding Difficulties}" 
+                                ItemDisplayBinding="{Binding Level}"/>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="DifficultyChckBx" CheckedChanged="DifficultyChckBx_CheckedChanged"></CheckBox>
+                <Label VerticalTextAlignment="Center">Bármilyen nehézség</Label>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Margin="0,0,0,20">
+            <Picker x:Name="TopicPckr" Title="Téma" ItemsSource="{Binding Topics}"
+                    ItemDisplayBinding="{Binding Name}"/>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="TopicChckBx" CheckedChanged="TopicChckBx_CheckedChanged"></CheckBox>
+                <Label VerticalTextAlignment="Center">Bármilyen témakör</Label>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Margin="0,0,0,20">
+            <Label>Szavak száma</Label>
+            <Slider x:Name="WordNumberSldr" Minimum="1" Maximum="100" Value="10" ValueChanged="WordNumberSldr_ValueChanged"/>
+            <Label x:Name="sliderLbl" Text="10"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" Margin="0,0,0,20">
+            <CheckBox x:Name="onlyUnsolvedChckBx" CheckedChanged="onlyUnsolvedChckBx_CheckedChanged"></CheckBox>
+            <Label VerticalTextAlignment="Center">Csak megoldatlan szavak</Label>
+        </StackLayout>
+
+        <Button x:Name="StartBtn" Margin="0,0,0,50" Text="Teszt elkezdése" Clicked="StartBtn_Clicked"/>
+        <Button x:Name="AllWordsBtn" Clicked="AllWordsBtn_Clicked" Text="Szavak megtekintése"></Button>
+    </VerticalStackLayout>
+
+</ContentPage>
