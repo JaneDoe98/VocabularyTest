@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="Page"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VocabularyTest.Views.TestPage"
-             xmlns:VM="clr-namespace:VocabularyTest.ViewModels">
+             xmlns:ViewModels="clr-namespace:VocabularyTest.ViewModels">
 
     <ScrollView>
         <VerticalStackLayout
         Spacing="5"
         Padding="30,0" Margin="0,20,0,20">
             <Border BackgroundColor="#EA738D" StrokeThickness="0">
-            <ListView x:Name="wordList" SelectionMode="None" Margin="2,2,2,2">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.Triggers>
-                                    <DataTrigger TargetType="Grid" Binding="{Binding IsEvenIndex}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#1a1a1a"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Grid" Binding="{Binding IsEvenIndex}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="#0d0d0d"/>
-                                    </DataTrigger>
-                                </Grid.Triggers>
-                                <Label Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" Text="{Binding HungarianWord}"/>
-                                    <Entry x:Name="answerEntr" Grid.Column="1" Grid.Row="0" Text="{Binding UserAnswer}" TextColor="White" IsSpellCheckEnabled="False">
-                                    <Entry.Triggers>
-                                        <DataTrigger TargetType="Entry" Binding="{Binding IsCorrect}" Value="True">
-                                            <Setter Property="BackgroundColor" Value="LimeGreen"/>
+                <ListView x:Name="wordList" SelectionMode="None" Margin="2,2,2,2">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding IsEvenIndex}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#1a1a1a"/>
                                         </DataTrigger>
-                                        <DataTrigger  TargetType="Entry" Binding="{Binding IsCorrect}" Value="False">
-                                            <Setter Property="BackgroundColor" Value="SteelBlue"/>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding IsEvenIndex}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#0d0d0d"/>
                                         </DataTrigger>
-                                    </Entry.Triggers>
-                                </Entry>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                    </Grid.Triggers>
+                                    <Label Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" Text="{Binding HungarianWord}"/>
+                                    <Label Grid.Column="1" Grid.Row="0" VerticalTextAlignment="Center" Text="{Binding EnglishWord}" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsSubmitted}" TextColor="LawnGreen" HorizontalTextAlignment="End" Margin="10,0,10,0"/>
+                                    <Entry x:Name="answerEntr" Grid.Column="2" Grid.Row="0" Text="{Binding UserAnswer}" IsReadOnly="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsSubmitted}" TextColor="White" IsSpellCheckEnabled="False">
+                                        <Entry.Triggers>
+                                            <DataTrigger TargetType="Entry" Binding="{Binding IsCorrect}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="LimeGreen"/>
+                                            </DataTrigger>
+                                            <DataTrigger  TargetType="Entry" Binding="{Binding IsCorrect}" Value="False">
+                                                <Setter Property="BackgroundColor" Value="SteelBlue"/>
+                                            </DataTrigger>
+                                        </Entry.Triggers>
+                                    </Entry>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Border>
 
             <Button

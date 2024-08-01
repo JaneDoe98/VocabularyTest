@@ -25,6 +25,8 @@ public partial class TestPage : ContentPage
     protected override void OnAppearing()
     {
         VM = new WordViewModel(ChosenWordNumber, ChosenDifficulty, ChosenTopic, OnlyUnsolved);
+
+        this.BindingContext = VM;
         wordList.ItemsSource = VM.Words;
 
         base.OnAppearing();
@@ -36,9 +38,9 @@ public partial class TestPage : ContentPage
         Shell.Current.GoToAsync("//MainPage");
     }
 
-    private void SubmitBtn_Clicked(object sender, EventArgs e)
+    private void SubmitBtn_Clicked(object sender, EventArgs e)      //betûszín!
     {
-        foreach (Word word in this.VM.Words)
+        foreach (TestWord word in this.VM.Words)
         {
             word.CheckAnswers();
             if (word.IsCorrect)
@@ -52,9 +54,9 @@ public partial class TestPage : ContentPage
             }
         }
 
-        VM._context.SaveChanges();
+        VM.Submit();
 
-        VM.isSubmitted = true;
+        VM._context.SaveChanges();
 
         int correctAnswers = this.VM.Words.Count(x => x.IsCorrect);
 

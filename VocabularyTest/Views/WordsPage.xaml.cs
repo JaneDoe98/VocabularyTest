@@ -30,7 +30,7 @@ public partial class WordsPage : ContentPage
         {
             if (word.Difficulty == "Basic")
             {
-                word.IsSupposedToShow = e.Value;
+                word.IsCorrectDifficulty = e.Value;
             }
         }
     }
@@ -41,7 +41,7 @@ public partial class WordsPage : ContentPage
         {
             if (word.Difficulty == "Intermediate")
             {
-                word.IsSupposedToShow = e.Value;
+                word.IsCorrectDifficulty = e.Value;
             }
         }
     }
@@ -52,8 +52,16 @@ public partial class WordsPage : ContentPage
         {
             if (word.Difficulty == "Advanced")
             {
-                word.IsSupposedToShow = e.Value;
+                word.IsCorrectDifficulty = e.Value;
             }
+        }
+    }
+
+    private void HideKnownWordsChckBx_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        foreach (var word in listViewModel.Words)       //ebbõl static class member-t
+        {
+            word.HideSolved = e.Value;
         }
     }
 
@@ -137,7 +145,7 @@ public partial class WordsPage : ContentPage
 
     private void wordsView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if(wordsView.SelectedItem != null)
+        if (wordsView.SelectedItem != null)
         {
             PronunceWord(((DetailedWord)wordsView.SelectedItem).EnglishWord);
         }
@@ -178,14 +186,14 @@ public partial class WordsPage : ContentPage
 
         engLocale = locales.FirstOrDefault(x => x.Name == "Microsoft Zira");
 
-        if(engLocale == null)
+        if (engLocale == null)
         {
             bool answer = await DisplayAlert("Beszédhang nem található", "A program által használt beszédhang nem található a számítógépen. Amennyiben kijelöléskor szeretné hallani a szavak kiejtését, kérem töltse le a kívánt beszédhangot a weboldal alapján (hangcsomag neve: \"angol (egyesült államokbeli)\")!", "Weboldal Megnyitása", "Mégse");
             if (answer)
             {
                 Uri uri = new Uri("https://support.microsoft.com/hu-hu/topic/nyelvek-%C3%A9s-hangok-let%C3%B6lt%C3%A9se-modern-olvas%C3%B3-olvas%C3%A1si-m%C3%B3d-%C3%A9s-felolvas%C3%A1s-c%C3%A9lj%C3%A1b%C3%B3l-4c83a8d8-7486-42f7-8e46-2b0fdf753130");
                 await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
-            } 
+            }
         }
     }
 }

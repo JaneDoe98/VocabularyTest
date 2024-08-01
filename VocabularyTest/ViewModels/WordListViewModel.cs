@@ -69,6 +69,7 @@ namespace VocabularyTest.ViewModels
                 Id = dto.WordId,
                 EnglishWord = dto.EnglishWord,
                 HungarianWord = dto.HungarianWord,
+                IsUnsolved = dto.IsUnsolved == 0 ? false : true,
                 Difficulty = difficulty
             };
         }
@@ -154,16 +155,47 @@ namespace VocabularyTest.ViewModels
         public string Difficulty { get; set; }
         public bool IsUnsolved { get; set; }
 
-        private bool isSupposedToShow = true;
         public bool IsSupposedToShow
         {
             get
             {
-                return isSupposedToShow;
+                if (HideSolved)
+                {
+                    return IsCorrectDifficulty && IsUnsolved;
+                }
+                else
+                {
+                    return IsCorrectDifficulty;
+                }
+            }
+        }
+
+        private bool isCorrectDifficulty = true;
+        public bool IsCorrectDifficulty
+        {
+            get
+            {
+                return isCorrectDifficulty;
             }
             set
             {
-                isSupposedToShow = value;
+                isCorrectDifficulty = value;
+                OnPropertyChanged(nameof(IsCorrectDifficulty));
+                OnPropertyChanged(nameof(IsSupposedToShow));
+            }
+        }
+
+        private bool hideSolved = false;
+        public bool HideSolved
+        {
+            get
+            {
+                return hideSolved;
+            }
+            set
+            {
+                hideSolved = value;
+                OnPropertyChanged(nameof(HideSolved));
                 OnPropertyChanged(nameof(IsSupposedToShow));
             }
         }

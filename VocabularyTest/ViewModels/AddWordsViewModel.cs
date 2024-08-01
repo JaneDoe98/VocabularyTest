@@ -1,19 +1,43 @@
-﻿using System.Data;
+﻿using System.ComponentModel;
+using System.Data;
 using VocabularyTest.Data;
 using VocabularyTest.Models;
 
 namespace VocabularyTest.ViewModels
 {
-    internal class AddWordsViewModel
+    internal class AddWordsViewModel : INotifyPropertyChanged
     {
-        public List<Topic> Topics { get; set; }
+        private List<Topic> topics;
+        public List<Topic> Topics
+        {
+            get
+            {
+                return topics;
+            }
+            set
+            {
+                topics = value;
+                OnPropertyChanged(nameof(Topics));
+            }
+        }
         public List<Difficulty> Difficulties { get; set; }
 
         internal WordDataContext _context = new WordDataContext();
 
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
         public AddWordsViewModel()
         {
-            Topics = new List<Topic>(_context.Topic.Select(x => DtoToModel(x)).ToList());
             Difficulties = new List<Difficulty>(_context.Difficulty.Select(x => DtoToModel(x)).ToList());
         }
 
@@ -25,6 +49,11 @@ namespace VocabularyTest.ViewModels
         public static Difficulty DtoToModel(DifficultyDTO dto)
         {
             return new Difficulty(dto.DifficultyId, dto.DifficultyLevel);
+        }
+
+        public void LoadTopics()
+        {
+            Topics = new List<Topic>(_context.Topic.Select(x => DtoToModel(x)).ToList());
         }
 
         public void AddSingleWord(string hunWord, string engWord, int difficultyId, int topicId)

@@ -1,7 +1,7 @@
 {
   "profiles": {
     "Windows Machine": {
-      "commandName": "Project",
+      "commandName": "MsixPackage",   //Project-nél adja a hibát, publish-nál lehet vissza kell írni?
       "nativeDebugging": false
     }
   }

@@ -2,7 +2,7 @@
 
 namespace VocabularyTest.Models
 {
-    internal class Word : IWord, INotifyPropertyChanged
+    internal class TestWord : IWord, INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string EnglishWord { get; set; }
@@ -14,7 +14,7 @@ namespace VocabularyTest.Models
         public bool IsCorrect { get; set; } = false;
         public bool IsEvenIndex { get; set; }
 
-        public Word(int id, string english, string hungarian, bool isUnsolved = true)
+        public TestWord(int id, string english, string hungarian, bool isUnsolved = true)
         {
             Id = id;
             EnglishWord = english;
@@ -27,12 +27,12 @@ namespace VocabularyTest.Models
             IsCorrect = string.Equals(UserAnswer, EnglishWord, StringComparison.CurrentCultureIgnoreCase);
 
             OnPropertyChanged(nameof(IsCorrect));
+
             if (IsCorrect)
             {
                 IsUnsolved = false;
             }
         }
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -15,6 +15,13 @@ namespace VocabularyTest.Views
             InitializeComponent();
         }
 
+        protected override void OnAppearing()
+        {
+            mainViewModel.LoadTopics();
+
+            base.OnAppearing();
+        }
+
         private void StartBtn_Clicked(object sender, EventArgs e)
         {
             if ((DifficultyChckBx.IsChecked || DifficultyPckr.SelectedItem != null) &&

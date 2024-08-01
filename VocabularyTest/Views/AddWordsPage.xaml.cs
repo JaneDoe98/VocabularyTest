@@ -14,6 +14,13 @@ public partial class AddWordsPage : ContentPage
         InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        viewModel.LoadTopics();
+
+        base.OnAppearing();
+    }
+
     private void addNewWordBtn_Clicked(object sender, EventArgs e)
     {
         if (hungarianEntr.Text == "" ||
@@ -144,7 +151,6 @@ public partial class AddWordsPage : ContentPage
             }
         }
     }
-
     private void goBackBtn_Clicked(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//Words");
